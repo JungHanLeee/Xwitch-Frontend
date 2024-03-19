@@ -1,5 +1,5 @@
 import SettingButton from "@/components/SettingButton";
-import React, {CSSProperties, useState} from "react";
+import React, {CSSProperties, useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {foundStreamerState} from "@/recoil/recoilAtoms";
 
@@ -9,9 +9,18 @@ interface ChildComponentProps {
 const VideoPlayer: React.FC<ChildComponentProps> = ({videoWrapperStyles}) => {
   const [volume, setVolume] = useState("0.5");
   const [foundStreamer] = useRecoilState(foundStreamerState)
+  const [fullScreen, setFullScreen] = useState(false);
+
   const handleVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(event.target.value)
   }
+  const screenHandler = () => {
+    setFullScreen(!fullScreen);
+    console.log("buttonClicked")
+  }
+  useEffect(() => {
+    console.log(fullScreen);
+  }, [fullScreen]);
   return (
     <div className="InjectLayout-sc-1i43xsx-0 persistent-player" data-a-player-state=""
          style={videoWrapperStyles}>
@@ -175,7 +184,7 @@ const VideoPlayer: React.FC<ChildComponentProps> = ({videoWrapperStyles}) => {
                             </div>
                             <div className="Layout-sc-1xcs6mc-0 kiFVbr"></div>
                             <div className="InjectLayout-sc-1i43xsx-0 kBtJDm">
-                              <button
+                              <button onClick={()=> screenHandler()}
                                 className="ScCoreButton-sc-ocjdkq-0 caieTg ScButtonIcon-sc-9yap0r-0 dOOPAe"
                                 aria-label="전체 화면 (f)" aria-haspopup="menu"
                                 data-a-target="player-fullscreen-button">
