@@ -17,3 +17,13 @@ export const foundStreamerState = atom<StreamerInfo | undefined>({
   key: 'foundStreamerState',
   default: undefined,
 });
+
+export const sidebarExtendState = atom<boolean> ({
+  key: 'extend',
+  default: false,
+})
+
+export const windowWidth = atom<number>({
+  key: 'windowWidth',
+  default: window.innerWidth,
+})

@@ -3,16 +3,19 @@
 import React, {useEffect, useState} from 'react'
 import StreamerProfileButton from "@/components/StreamerProfileButton";
 import {streamerInfo} from "@/constants/streamerInfo";
+import {useRecoilState} from "recoil";
+import {sidebarExtendState} from "@/recoil/recoilAtoms";
 
 export const SideBar = ({serverSideData}: any) => {
     const [clientSideData, setClientSideData] = useState(null);
     const [sidebarWidth, setSidebarWidth] = useState(56);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [extend, setExtend] = useState(false)
-
+    const [extend, setExtend] = useState(false);
+    const [extended, setExtends] = useRecoilState(sidebarExtendState);
     const handleExtend = () => {
       console.log("handle", extend);
       setExtend(!extend);
+      setExtends(!extended)
       setSidebarWidth(!extend ? 15 : 4);
     }
     const handleResize = () => {

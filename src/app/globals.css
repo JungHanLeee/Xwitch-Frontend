@@ -197,7 +197,7 @@ section {
     display: flex !important;
     -webkit-box-pack: center !important;
     justify-content: center !important;
-    /*margin-top: 0.5rem !important;*/
+    margin-top: 0.5rem !important;
     /*margin-bottom: 0.5rem !important;*/
     /*padding-top: 0.5rem !important;*/
     /*padding-bottom: 0.5rem !important;*/

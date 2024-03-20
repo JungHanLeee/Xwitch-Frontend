@@ -7,7 +7,7 @@ import SettingButton from "@/components/SettingButton";
 import VideoPlayer from "@/components/VideoPlayer";
 import {streamerInfo} from "@/constants/streamerInfo";
 import {useRecoilState} from "recoil";
-import {foundStreamerState} from "@/recoil/recoilAtoms";
+import {foundStreamerState, sidebarExtendState} from "@/recoil/recoilAtoms";
 
 const StreamerPage: React.FC = () => {
   const currentURL = window.location.href.split('/');
@@ -16,11 +16,13 @@ const StreamerPage: React.FC = () => {
   const [online, setOnline] = useState(true);
   const persistentPlayerContent = document.querySelector('[data-target="persistent-player-content"]');
   const videoWrapperRef = useRef<HTMLDivElement | null>(null);
+  const [extend, setExtend] = useRecoilState(sidebarExtendState);
   const [videoWrapperStyles, setVideoWrapperStyles] = useState({
     position: 'absolute' as 'absolute',
     overflow: 'hidden',
     zIndex: '1',
   });
+
   const Streamer = useMemo(() => {
     return streamerInfo.find((streamer) => streamer.streamerId === streamerIdFromURL);
   }, [streamerIdFromURL]);
@@ -39,6 +41,8 @@ const StreamerPage: React.FC = () => {
     };
     fetchData();
   },[])
+  console.log(extend);
+
   // const foundStreamer
   //   = useMemo(() => {
   //   return streamerInfo.find((streamer) => streamer.streamerId === streamerIdFromURL);
@@ -55,14 +59,21 @@ const StreamerPage: React.FC = () => {
         const { top, left, width, height } = element.getBoundingClientRect();
 
         // 새로운 스타일 계산
-        const newStyles = {
+        let newStyles = {
           ...videoWrapperStyles,
           top: `${top - 48}px`,
           left: `${left - 48}px`,
           width: `${width}px`,
           height: `${height}px`,
         };
-
+        console.log(extend, newStyles);
+        if (extend === true && window.innerWidth>=1200) {
+          newStyles = {
+            ...newStyles,
+            left: `${left - 250}px`,
+          };
+          console.log("log", newStyles);
+        }
         // 스타일 업데이트
         setVideoWrapperStyles((prevStyles) => {
           // 이전 스타일과 새로운 스타일이 같으면 업데이트하지 않음
@@ -82,8 +93,7 @@ const StreamerPage: React.FC = () => {
     return () => {
       window.removeEventListener('resize', updateStyles);
     };
-  }, [videoWrapperRef.current]);
-  console.log(foundStreamer);
+  }, [videoWrapperRef.current, extend]);
   return (
     <div>
 
