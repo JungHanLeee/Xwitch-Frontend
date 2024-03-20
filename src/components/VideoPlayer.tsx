@@ -16,14 +16,32 @@ const VideoPlayer: React.FC<ChildComponentProps> = ({videoWrapperStyles}) => {
   }
   const screenHandler = () => {
     setFullScreen(!fullScreen);
-    console.log("buttonClicked")
+    // console.log("buttonClicked")
   }
+  const getDynamicStyles = () => {
+    if(fullScreen) {
+      return {
+        position: 'fixed' as 'fixed',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)', /* 반투명한 배경색 */
+        zIndex: '9999' /* 다른 요소 위에 표시되도록 설정 */
+      }
+    } else {
+      return {
+        ...videoWrapperStyles
+      }
+    };
+  }
+
   useEffect(() => {
     console.log(fullScreen);
   }, [fullScreen]);
   return (
     <div className="InjectLayout-sc-1i43xsx-0 persistent-player" data-a-player-state=""
-         style={videoWrapperStyles}>
+         style={getDynamicStyles()}>
       <div className="ScAspectRatio-sc-18km980-1 doeqbO tw-aspect">
         <div className="ScAspectSpacer-sc-18km980-0 fCNuzu"></div>
         <div className="Layout-sc-1xcs6mc-0 video-player" data-a-target="video-player"

@@ -1534,9 +1534,9 @@ ipRZmL {
     background: #000;
 }
 
-.video-player__container--resize-calc {
-    max-height: calc(100vh - 16rem);
-}
+/*.video-player__container--resize-calc {*/
+/*    max-height: calc(100vh - 16rem);*/
+/*}*/
 
 .video-player__container {
     background: #000;
