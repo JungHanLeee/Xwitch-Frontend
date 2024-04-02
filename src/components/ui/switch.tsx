@@ -19,6 +19,7 @@ return(
       className
     )}
     {...props}
+    checked={checked}
     ref={ref}
     onCheckedChange={(checked) => {
       console.log(checked);
