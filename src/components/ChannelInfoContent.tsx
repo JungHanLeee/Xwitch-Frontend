@@ -1,10 +1,10 @@
 import React from "react";
 import CustomLink from "@/components/CustomLink";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {foundStreamerState} from "@/recoil/recoilAtoms";
 
 const ChannelInfoContent: React.FC = () => {
-  const [foundStreamer] = useRecoilState(foundStreamerState);
+  const foundStreamer = useRecoilValue(foundStreamerState);
   return (
     <div className="channel-info-content">
       <section className="Layout-sc-1xcs6mc-0 skip-to-target section-one" id="offline-channel-main-content"

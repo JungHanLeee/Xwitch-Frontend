@@ -64,6 +64,9 @@
         --input: 217.2 32.6% 17.5%;
         --ring: 212.7 26.8% 83.9%;
     }
+    button {
+        background-color: unset;
+    }
 }
 
 @layer base {
@@ -77,6 +80,7 @@
 }
 
 * {
+    @apply transition-colors duration-100;
     /*font-size: 15px;*/
     box-sizing: border-box;
     margin: 0;
@@ -96,9 +100,6 @@ section {
     fill: #fff;
 }
 
-.dosCbl {
-    fill: #9147ff;
-}
 
 .jdpzyl {
     display: flex;

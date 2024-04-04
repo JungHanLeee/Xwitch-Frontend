@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import {useRecoilValue} from "recoil";
+import {switchState} from "@/recoil/recoilAtoms";
 
 const Search = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-
+  const darkMode = useRecoilValue(switchState);
   useEffect(() => {
 
     const handleResize = () => {
@@ -28,29 +30,34 @@ const Search = () => {
         <input
           type="text"
           placeholder="검색"
-          className="py-2 px-3 border border-gray-300 rounded-md"
+          className={darkMode ? "py-2 px-3 border bg-[#18181b] border-gray-300 " : "py-2 px-3 border border-gray-300 "}
           style={{
+
             maxWidth: '60rem',
-            width: '100%',
+            width: '25rem',
             height: '2rem',
-            margin: '0 1rem',
-            background: 'rgba(255, 255, 255, .4)',
-            borderRadius: '5px'
+            // margin: '0 1rem',
+            // background: 'rgba(255, 255, 255, .4)',
+            borderBottomLeftRadius: '5px',
+            borderTopLeftRadius: '5px'
           }}
         />
       )}
       {/* You can add a search icon or button here if needed */}
-      <button className={`w-18 ${isSmallScreen ? 'md:ml-2' : 'md:mr-2'}`}>
+      <button
+        className={`${darkMode ? 'bg-[#53535F61] bg-opacity-100' : 'bg-gray-200'} ${isSmallScreen ? 'md:ml-2' : 'md:mr-2'} rounded-r-lg`}>
+
+
         {/* 검색 아이콘 추가 */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-gray-700"
+          className={darkMode ? "h-8 w-8  text-white" : "h-8 w-8 text-gray-700"}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-5.2-5.2" />
-          <circle cx="10" cy="10" r="8" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M18 18l-3-3"/>
+          <circle cx="10" cy="10" r="6" strokeWidth="2"/>
         </svg>
       </button>
     </div>

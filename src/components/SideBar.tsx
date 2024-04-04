@@ -3,20 +3,18 @@
 import React, {useEffect, useState} from 'react'
 import StreamerProfileButton from "@/components/StreamerProfileButton";
 import {streamerInfo} from "@/constants/streamerInfo";
-import {useRecoilState} from "recoil";
-import {sidebarExtendState} from "@/recoil/recoilAtoms";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {sidebarExtendState, switchState} from "@/recoil/recoilAtoms";
 
 export const SideBar = ({serverSideData}: any) => {
     const [clientSideData, setClientSideData] = useState(null);
     const [sidebarWidth, setSidebarWidth] = useState(56);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [extend, setExtend] = useState(false);
     const [extended, setExtends] = useRecoilState(sidebarExtendState);
+    const darkMode = useRecoilValue(switchState);
     const handleExtend = () => {
-      console.log("handle", extend);
-      setExtend(!extend);
       setExtends(!extended)
-      setSidebarWidth(!extend ? 15 : 4);
+      setSidebarWidth(!extended ? 15 : 4);
     }
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -28,10 +26,9 @@ export const SideBar = ({serverSideData}: any) => {
           // setClientSideData(data);
         };
 
-        setSidebarWidth(window.innerWidth >= 1200 ? (extend ? 15 : 3) : 3);
+        setSidebarWidth(window.innerWidth >= 1200 ? (extended ? 15 : 3) : 3);
 
         // fetchData().then(r => console.log(r));
-        // 화면 크기에 따른 사이드바 크기 조정
 
         if (typeof window != 'undefined') {
           window.addEventListener('resize', handleResize);
@@ -40,15 +37,15 @@ export const SideBar = ({serverSideData}: any) => {
             window.removeEventListener('resize', handleResize);
           }
         }
-      }, [extend, window.innerWidth]
+      }, [extended, window.innerWidth]
     )
 
     return (
-      <div className={'bg-gray-200 h-full'} style={{width: `${sidebarWidth}rem`}}>
+      <div className={darkMode ?  'bg-zinc-700' : 'bg-gray-200 h-full'} style={{width: `${sidebarWidth}rem`}}>
         <div className='bg-gray-200' style={{position: 'relative'}}>
           <div>
             <div
-              className={`Layout-sc-1xcs6mc-0 collapse-toggle ${ typeof window !== 'undefined' && window.innerWidth < 1200 ? 'hidden' : extend ? 'gazthU' : 'kpdiXD'}`}>
+              className={`Layout-sc-1xcs6mc-0 collapse-toggle ${ typeof window !== 'undefined' && window.innerWidth < 1200 ? 'hidden' : extended ? 'gazthU' : 'kpdiXD'}`}>
               <div className="inline-flex kBtJDm">
                 <button onClick={handleExtend} className="ScCoreButton-sc-ocjdkq-0 bTXTVH ScButtonIcon-sc-9yap0r-0 eSFFfM"
                         aria-label="측면 탐색 확장"
@@ -60,7 +57,7 @@ export const SideBar = ({serverSideData}: any) => {
 
                         <svg width="100%" height="100%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px"
                              role="presentation" aria-hidden="true" focusable="false"
-                             className={`ScIconSVG-sc-1q25cff-1 jpczqG" ${extend && windowWidth>=1200 ? 'flip-horizontal' : ''}`}>
+                             className={`ScIconSVG-sc-1q25cff-1 jpczqG" ${extended && windowWidth>=1200 ? 'flip-horizontal' : ''}`}>
                           <g>
                             <path d="M4 16V4H2v12h2zM13 15l-1.5-1.5L14 11H6V9h8l-2.5-2.5L13 5l5 5-5 5z"></path>
                           </g>
@@ -78,7 +75,7 @@ export const SideBar = ({serverSideData}: any) => {
                   <div className="Layout-sc-1xcs6mc-0">
                     <div className="Layout-sc-1xcs6mc-0">
                       <div aria-label="추천 채널" className="Layout-sc-1xcs6mc-0 dcyYPL side-nav-section" role="group">
-                        {extend && windowWidth > 1200 ? <div className='m-2 pt-2 font-semibold text-xs'><h2>추천채널</h2></div> :
+                        {extended && windowWidth > 1200 ? <div className='m-2 pt-2 font-semibold text-xs'><h2>추천채널</h2></div> :
                           <div className="InjectLayout-sc-1i43xsx-0 kBtJDm">
                             <div className="Layout-sc-1xcs6mc-0 kYEeAt side-nav-header"
                                  data-a-target="side-nav-header-collapsed">
@@ -94,7 +91,7 @@ export const SideBar = ({serverSideData}: any) => {
                         }
                         <div className="relative InjectLayout-sc-1i43xsx-0 hWukFy tw-transition-group">
                           {streamerInfo.map((info) => (
-                            <StreamerProfileButton key={info.streamerId} info={info} collapsed={extend}/>
+                            <StreamerProfileButton key={info.streamerId} info={info} collapsed={extended}/>
                           ))}
                         </div>
                       </div>

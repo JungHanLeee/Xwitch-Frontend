@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {foundStreamerState} from "@/recoil/recoilAtoms";
 
 interface CustomLinkProps {
@@ -11,7 +11,7 @@ interface CustomLinkProps {
 }
 
 const CustomLink: React.FC<CustomLinkProps> = ({ size, status, href, children }) => {
-  const [foundStreamer] = useRecoilState(foundStreamerState);
+  const foundStreamer = useRecoilValue(foundStreamerState);
   return (
     <a className={`ScHalo-sc-18imt3g-0 ipRZmL tw-halo`} href={`/pages/${href}`} style={{display: 'block', width: `${size}px`, height: `${size}px`}}>
       {/* 여기에서 size와 status를 사용하여 필요한 로직을 추가할 수 있습니다. */}

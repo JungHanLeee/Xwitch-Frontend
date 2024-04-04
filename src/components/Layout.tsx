@@ -1,12 +1,22 @@
 import {Navbar} from "@/components/Navbar";
-import React from "react";
+import React, {useEffect} from "react";
 import SideBar from "@/components/SideBar";
+import {useRecoilValue} from "recoil";
+import {switchState} from "@/recoil/recoilAtoms";
 
 const Layout = ({
                   children,
                 }: {
   children: React.ReactNode
 }) => {
+  const darkMode = useRecoilValue(switchState)
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  },[darkMode])
   return (
     <html>
     <body className="flex flex-col h-screen overflow-hidden">
